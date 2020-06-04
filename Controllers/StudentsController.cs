@@ -9,9 +9,9 @@ namespace StudentAPI.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
-        private readonly SqlStudentRepo _repository;
+        private readonly IStudentRepo _repository;
 
-        public StudentsController(SqlStudentRepo repository)
+        public StudentsController(IStudentRepo repository)
         {
             _repository = repository;    
         }
@@ -21,14 +21,22 @@ namespace StudentAPI.Controllers
         public ActionResult <IEnumerable<Student>> GetAllStudents()
         {
             var studentItems = _repository.GetAllStudents();
-            return NotFound();
+
+            return Ok(studentItems);
         }
 
         // GET api/students/{id}
-        [HttpGet("{id}")]
+        [HttpGet("{studentId}")]
         public ActionResult <Student> GetStudentById(int studentId)
         {
+            var studentItem = _repository.GetStudentById(studentId);
+            
+            if(studentItem != null)
+            {
+                return Ok(studentItem);
+            }
             return NotFound();
+            
         }
     }
 }
