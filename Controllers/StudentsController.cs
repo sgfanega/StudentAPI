@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using StudentAPI.Data;
+using StudentAPI.Dtos;
 using StudentAPI.Models;
 
 namespace StudentAPI.Controllers
@@ -10,33 +12,34 @@ namespace StudentAPI.Controllers
     public class StudentsController : ControllerBase
     {
         private readonly IStudentRepo _repository;
+        private readonly IMapper _mapper;
 
-        public StudentsController(IStudentRepo repository)
+        public StudentsController(IStudentRepo repository, IMapper mapper)
         {
             _repository = repository;    
+            _mapper = mapper;
         }
 
         // GET api/students
         [HttpGet]
-        public ActionResult <IEnumerable<Student>> GetAllStudents()
+        public ActionResult <IEnumerable<StudentReadDto>> GetAllStudents()
         {
             var studentItems = _repository.GetAllStudents();
 
-            return Ok(studentItems);
+            return Ok(_mapper.Map<IEnumerable<StudentReadDto>>(studentItems));
         }
 
         // GET api/students/{id}
         [HttpGet("{studentId}")]
-        public ActionResult <Student> GetStudentById(int studentId)
+        public ActionResult <StudentReadDto> GetStudentById(int studentId)
         {
             var studentItem = _repository.GetStudentById(studentId);
             
             if(studentItem != null)
             {
-                return Ok(studentItem);
+                return Ok(_mapper.Map<StudentReadDto>(studentItem));
             }
             return NotFound();
-            
         }
     }
 }
