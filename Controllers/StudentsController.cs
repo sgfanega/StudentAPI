@@ -39,7 +39,20 @@ namespace StudentAPI.Controllers
             {
                 return Ok(_mapper.Map<StudentReadDto>(studentItem));
             }
+
             return NotFound();
+        }
+
+        // POST api/students
+        [HttpPost]
+        public ActionResult <StudentReadDto> CreateStudent(StudentCreateDto studentCreateDto)
+        {
+            var studentModel = _mapper.Map<Student>(studentCreateDto);
+
+            _repository.CreateStudent(studentModel);
+            _repository.SaveChanges();
+
+            return Ok(studentModel);
         }
     }
 }
