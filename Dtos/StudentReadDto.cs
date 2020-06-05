@@ -9,7 +9,7 @@ namespace StudentAPI.Dtos
         public string MiddleName { get; set; }
 
         public string LastName { get; set; }
-
-        public int GradeLevel { get; set; }
+        
+        public int GradeLevel {get; set; }
     }
 }
