@@ -18,11 +18,11 @@ namespace StudentAPI.Models
         [Required]
         [MaxLength(50)]
         public string LastName { get; set; }
-        
+
         [Required]
-        [MaxLength(2)]
-        public int GradeLevel { get; set; }
-        
+        [Range(1, 12)]
+        public int GradeLevel { get; set;}
+
         [Required]
         public DateTime BirthDate { get; set; }
     }
