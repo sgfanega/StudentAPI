@@ -8,8 +8,12 @@ namespace StudentAPI.Profiles
     {
         public StudentsProfile()
         {
-            // Source
+            // Source -> Target
             CreateMap<Student, StudentReadDto>();
+
+            // Target -> Source
+            CreateMap<StudentReadDto, Student>();
+
         }
     }
 }
