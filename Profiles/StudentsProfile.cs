@@ -12,7 +12,7 @@ namespace StudentAPI.Profiles
             CreateMap<Student, StudentReadDto>();
 
             // Target -> Source
-            CreateMap<StudentReadDto, Student>();
+            CreateMap<StudentCreateDto, Student>();
 
         }
     }
