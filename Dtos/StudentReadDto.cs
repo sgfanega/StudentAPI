@@ -1,6 +1,3 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-
 namespace StudentAPI.Dtos
 {
     public class StudentReadDto
