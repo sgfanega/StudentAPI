@@ -9,12 +9,15 @@ namespace StudentAPI.Data
 
         // GET
         IEnumerable<Student> GetAllStudents();
-        Student GetStudentById(int StudentId);
+        Student GetStudentById(int studentId);
         
         // POST
-    
+        void CreateStudent(Student student);
+        
         // PUT
-
+        void UpdateStudent(Student student);
+        
         // DELETE
+        void DeleteStudent(Student student);
     }
 }
