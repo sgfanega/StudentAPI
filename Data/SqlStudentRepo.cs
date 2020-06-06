@@ -51,7 +51,8 @@ namespace StudentAPI.Data
 
         public void UpdateStudent(Student student)
         {
-            // Nothing
+            // Nothing because DBContext takes care of everything
+            // This will still be "used" just for good practice in the Controller
         }
     }
 }
