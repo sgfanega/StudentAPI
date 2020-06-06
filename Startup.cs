@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 using StudentAPI.Data;
 
 namespace StudentAPI
@@ -31,14 +32,16 @@ namespace StudentAPI
             services.AddDbContext<StudentContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("StudentConnection")));
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(setup => 
+            {
+                setup.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             
             services.AddScoped<IStudentRepo, SqlStudentRepo>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
