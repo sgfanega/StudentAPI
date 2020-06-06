@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using StudentAPI.Data;
 using StudentAPI.Dtos;
@@ -30,7 +31,7 @@ namespace StudentAPI.Controllers
         }
 
         // GET api/students/{id}
-        [HttpGet("{studentId}")]
+        [HttpGet("{studentId}", Name="GetStudentById")]
         public ActionResult <StudentReadDto> GetStudentById(int studentId)
         {
             var studentItem = _repository.GetStudentById(studentId);
@@ -51,8 +52,10 @@ namespace StudentAPI.Controllers
 
             _repository.CreateStudent(studentModel);
             _repository.SaveChanges();
+            
+            var studentReadDto = _mapper.Map<StudentReadDto>(studentModel);
 
-            return Ok(studentModel);
+            return CreatedAtRoute(nameof(GetStudentById), new {StudentId = studentReadDto.StudentId}, studentReadDto);
         }
 
         // PUT api/students/{id}
@@ -71,7 +74,47 @@ namespace StudentAPI.Controllers
             _repository.UpdateStudent(studentModelFromRepo);
 
             _repository.SaveChanges();
+
+            return NoContent();
+        }
+
+        // PATCH api/students/{id}
+        [HttpPatch("{studentId}")]
+        public ActionResult PartialStudentUpdate(int studentId, JsonPatchDocument<StudentUpdateDto> patchDocument)
+        {
+            var studentModelFromRepo = _repository.GetStudentById(studentId);
+
+            if(studentModelFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            var studentToPatch = _mapper.Map<StudentUpdateDto>(studentModelFromRepo);
+            patchDocument.ApplyTo(studentToPatch, ModelState);
+            if(!TryValidateModel(studentToPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
             
+            _mapper.Map(studentToPatch, studentModelFromRepo);
+            _repository.UpdateStudent(studentModelFromRepo);
+            _repository.SaveChanges();
+
+            return NoContent();
+        }
+
+        // DELETE api/students/{studentId}
+        [HttpDelete("{studentId}")]
+        public ActionResult DeleteStudent(int studentId)
+        {
+            var studentModelFromRepo = _repository.GetStudentById(studentId);
+            if(studentModelFromRepo == null)
+            {
+                return NotFound();
+            }
+            _repository.DeleteStudent(studentModelFromRepo);
+            _repository.SaveChanges();
+
             return NoContent();
         }
     }
