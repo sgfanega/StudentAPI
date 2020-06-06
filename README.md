@@ -11,6 +11,7 @@ Visual Studio Code
 Postman
 
 Microsoft SQL Server Management Studio (Or any other DB, but I'm using MSS)
+
 =================================================================================================
 
 What do you need to understand first:
@@ -23,3 +24,14 @@ Profiles: Utitilizes AutoMapper which Maps DbContext with our DTOs/Models
 
 ================================================================================================
 
+Step 1: Create a login in MSS, remember the user and password.
+
+Step 2: Clone your own repository
+
+Step 3: Once in VSCode, open up the terminal and make sure you are inside the folder
+
+Step 4: Migrate the DBContext by "dotnet ef migrations add <insert name of migration>"
+  
+Step 5: Emulate the Migration to the DB by "dotnet ef database update" 
+
+**Note you need to go into app.json to change the Server, User and password**
