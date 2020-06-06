@@ -54,5 +54,25 @@ namespace StudentAPI.Controllers
 
             return Ok(studentModel);
         }
+
+        // PUT api/students/{id}
+        [HttpPut("{studentId}")]
+        public ActionResult UpdateCommand(int studentId, StudentUpdateDto studentUpdateDto)
+        {
+            var studentModelFromRepo = _repository.GetStudentById(studentId);
+
+            if(studentModelFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(studentUpdateDto, studentModelFromRepo);
+
+            _repository.UpdateStudent(studentModelFromRepo);
+
+            _repository.SaveChanges();
+            
+            return NoContent();
+        }
     }
 }
