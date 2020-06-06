@@ -14,6 +14,11 @@ namespace StudentAPI.Profiles
             // Target -> Source
             CreateMap<StudentCreateDto, Student>();
 
+            // Target -> Source
+            CreateMap<StudentUpdateDto, Student>();
+
+            // Source -> Target
+            CreateMap<Student, StudentUpdateDto>();
         }
     }
 }
