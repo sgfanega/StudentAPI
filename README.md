@@ -3,7 +3,8 @@ This project is to show my attempt and knowledge of simple ASP.Net Core APIs.
 If you would like to use this API to see how it works, there is a small tutorial bottom.
 
 
-========================================================================================
+===========================================================================
+
 What software you'll need:
 
 Visual Studio Code
@@ -12,7 +13,7 @@ Postman
 
 Microsoft SQL Server Management Studio (Or any other DB, but I'm using MSS)
 
-========================================================================================
+===========================================================================
 
 What do you need to understand first:
 
@@ -22,7 +23,7 @@ DB Creation in MSS: Create a login in MSS and keep the user and password. You ca
 
 Profiles: Utitilizes AutoMapper which Maps DbContext with our DTOs/Models
 
-========================================================================================
+===========================================================================
 
 Step 1: Create a login in MSS, remember the user and password.
 
@@ -34,4 +35,4 @@ Step 4: Migrate the DBContext by "dotnet ef migrations add <insert name of migra
   
 Step 5: Emulate the Migration to the DB by "dotnet ef database update" 
 
-**Note you need to go into app.json to change the Server, User and password**
+**Note you need to go into app.json to change the Server, User and password. Check my app.json to model it**
